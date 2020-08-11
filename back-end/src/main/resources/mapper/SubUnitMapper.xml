@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zez.backend.mapper.SubUnitMapper">
+
+
+    <resultMap id="SubUnit" type="com.zez.backend.entity.Unit">
+        <id column="sub_unit_id" property="unitId"/>
+        <result column="sub_unit_name" property="unitName"/>
+        <result column="upper_level_id" property="upperLevelId"/>
+    </resultMap>
+    <select id="findSubUnitByID" resultMap="SubUnit">
+        SELECT * FROM sub_unit
+        WHERE sub_unit_id=#{id}
+    </select>
+</mapper>

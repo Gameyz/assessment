@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zez.backend.mapper.ConstructionNatureMapper">
+    <select id="listAllConstructionNature" resultType="com.zez.backend.entity.ConstructionNature">
+        SELECT * FROM construction_nature;
+    </select>
+
+    <select id="getConstructionNatureById" resultType="com.zez.backend.entity.ConstructionNature">
+        SELECT * FROM construction_nature
+        where construction_nature_id=#{id}
+    </select>
+
+</mapper>
