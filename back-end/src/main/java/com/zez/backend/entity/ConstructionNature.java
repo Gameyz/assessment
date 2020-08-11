@@ -1,9 +1,10 @@
 package com.zez.backend.entity;
 
 
-import com.alibaba.druid.filter.AutoLoad;
-import lombok.*;
-import lombok.experimental.Accessors;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 

@@ -3,13 +3,9 @@ package com.zez.backend.service.impl;
 import com.zez.backend.entity.ConstructionNature;
 import com.zez.backend.mapper.ConstructionNatureMapper;
 import com.zez.backend.service.IConstructionNatureService;
-import lombok.Setter;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 

@@ -15,12 +15,10 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -69,7 +67,6 @@ public class ProjectController {
         this.projectDataRepository = projectDataRepository;
     }
 
-
     @PutMapping("/update")
     public CommonResult<Object> updateProject(@RequestBody Project project){
         Integer integer = projectService.UpdateProjectById(project);
@@ -85,8 +82,6 @@ public class ProjectController {
         return CommonResult.succ("ok!",integer);
     }
 
-
-
     @GetMapping("/projects/newId")
     public CommonResult<Object> getNewId(){
         String s = UUID.randomUUID().toString();
@@ -101,9 +96,11 @@ public class ProjectController {
                                             @RequestParam(name = "size", required = false, defaultValue = "10") String size,
                                             @RequestParam(name = "unit", required = false) Integer unit,
                                             @RequestParam(name = "subUnit", required = false) Integer subUnit,
-                                            @RequestParam(name = "constructionNature", required = false) Integer constructionNature,
+                                            @RequestParam(name = "constructionNatureId", required = false) Integer constructionNature,
                                             @RequestParam(name = "projectId", required = false) String projectId,
                                             @RequestParam(name = "projectName", required = false) String projectName){
+
+        System.out.println(constructionNature==null);
         int pageNum = Integer.parseInt(page);
         int pageSize = Integer.parseInt(size);
 
@@ -117,6 +114,7 @@ public class ProjectController {
         }
         if (null != constructionNature){
             bqb.must(QueryBuilders.matchQuery("constructionNatureId",constructionNature));
+
         }
         if (null != projectId){
             bqb.must(QueryBuilders.matchQuery("projectId",projectId));
@@ -125,13 +123,9 @@ public class ProjectController {
             bqb.must(QueryBuilders.matchQuery("projectName",projectName));
         }
 
-
-
-
-        Pageable pageable = PageRequest.of(pageNum, pageSize);
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(bqb)
-                .withPageable(pageable)
+                .withPageable(PageRequest.of(pageNum, pageSize))
                 .build();
 
         Page<Project> search = projectDataRepository.search(searchQuery);
@@ -157,7 +151,7 @@ public class ProjectController {
                             allunitname,
                             project.getConstructionNatureId(),
                             constructionNatureName,
-                            50.2
+                            0.0
                     )
             );
         }

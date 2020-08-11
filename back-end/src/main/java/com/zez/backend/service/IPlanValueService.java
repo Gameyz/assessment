@@ -18,11 +18,13 @@ public interface IPlanValueService {
     Integer insertPlanValue(PlanValue planValue);
     Integer updatePlanValueById(String id, Double planValue);
     Integer insertList(List<PlanValue> planValues);
-    Page<PlanValue> planValueSummary(String projectName,
-                                     Integer unitId,
-                                     Integer subUnitId,
-                                     Integer constructionNatureId,
-                                     String projectId,
-                                     String yearValue);
+    Object planValueSummary(String projectName,
+                            Integer unitId,
+                            Integer subUnitId,
+                            Integer constructionNatureId,
+                            String projectId,
+                            String yearValue);
+    Page<PlanValue> getPlanValue(String projectId,
+                        String yearValue);
 
 }

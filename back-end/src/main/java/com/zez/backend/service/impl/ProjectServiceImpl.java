@@ -5,7 +5,6 @@ import com.zez.backend.elasticSearch.repository.ProjectDataRepository;
 import com.zez.backend.entity.Project;
 import com.zez.backend.mapper.ProjectMapper;
 import com.zez.backend.service.IProjectService;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

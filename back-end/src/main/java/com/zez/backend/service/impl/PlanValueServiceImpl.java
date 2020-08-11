@@ -13,6 +13,7 @@ import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilde
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
@@ -57,15 +58,14 @@ public class PlanValueServiceImpl implements IPlanValueService {
 
 
     @Override
-    public Page<PlanValue> planValueSummary(String projectName,
+    public Object planValueSummary(String projectName,
                                             Integer unitId,
                                             Integer subUnitId,
                                             Integer constructionNatureId,
                                             String projectId,
                                             String yearValue){
-
-
         BoolQueryBuilder bqb = QueryBuilders.boolQuery();
+
         if (null != unitId){
             bqb.must(QueryBuilders.matchQuery("unitId",unitId));
         }
@@ -83,29 +83,43 @@ public class PlanValueServiceImpl implements IPlanValueService {
         }
 
 
-        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
-        boolQuery.must(JoinQueryBuilders.hasParentQuery("project",bqb,false));
-        boolQuery.must(QueryBuilders.matchQuery("yearValue",yearValue));
+        BoolQueryBuilder query = QueryBuilders.boolQuery();
+        query.must(QueryBuilders.matchQuery("yearValue",yearValue));
+        query.must(JoinQueryBuilders.hasParentQuery("project",bqb,false));
 
+        TermsAggregationBuilder builder =
+                AggregationBuilders.terms("SUM").field("yearValue")
+                        .subAggregation(AggregationBuilders.sum("sum_value").field("planValue"));
 
-        TermsAggregationBuilder aggregation = AggregationBuilders
-                .terms("sum")
-                .field("yearValue")
-                .subAggregation(AggregationBuilders
-                        .sum("sum_value")
-                        .field("planValue"));
-
-        aggregation.showTermDocCountError(true);
-        SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(bqb)
-                .addAggregation(aggregation)
+        builder.showTermDocCountError(true);
+        SearchQuery searchQuery =new NativeSearchQueryBuilder()
+                .withQuery(query)
+                .addAggregation(builder)
                 .withPageable(PageRequest.of(0,1))
                 .build();
 
+        AggregatedPage<PlanValue> search = (AggregatedPage)planValueRepository.search(searchQuery);
+
+        return search;
+
+
+
+    }
+
+    @Override
+    public Page<PlanValue> getPlanValue( String projectId, String yearValue){
+
+        BoolQueryBuilder query = QueryBuilders.boolQuery();
+        query.must(QueryBuilders.matchQuery("yearValue",yearValue));
+        query.must(JoinQueryBuilders.hasParentQuery("project",QueryBuilders.matchQuery("projectId",projectId),false));
+
+        SearchQuery searchQuery =new NativeSearchQueryBuilder()
+                .withQuery(query)
+                .withPageable(PageRequest.of(0,1))
+                .build();
 
         Page<PlanValue> search = planValueRepository.search(searchQuery);
         return search;
-
 
 
     }

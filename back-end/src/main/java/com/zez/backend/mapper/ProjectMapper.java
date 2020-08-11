@@ -1,10 +1,8 @@
 package com.zez.backend.mapper;
 
 
-import com.zez.backend.entity.PlanValue;
 import com.zez.backend.entity.Project;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

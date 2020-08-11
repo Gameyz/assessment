@@ -519,13 +519,14 @@
             },
 
             constructionChange() {
-                console.log(this.constructionNatureValue);
+                this.goNPage(1)
             },
             yearChange() {
-                console.log(this.yearValue);
+                this.goNPage(1)
+
             },
             unitChange() {
-                console.log(typeof (this.unitValue));
+                this.goNPage(1)
             },
             maxRowsChange() {
                 this.goNPage(1);
@@ -577,7 +578,7 @@
                     arr['params']['projectName'] = this.projectName;
                 }
                 if(this.constructionNatureValue!==1){
-                    arr['params']['constructionNature']=this.constructionNatureValue;
+                    arr['params']['constructionNatureId']=this.constructionNatureValue;
                 }
 
                 let _tableHead = this.tableData[0];
@@ -595,6 +596,18 @@
 
                     _this.totalRecordingNumber = res.data.data.totalElements;
                     _this.frontRecordingNumber = (_this.nowPageNum-1)*_this.maxRowsNumOfTable;
+
+                    arr['params']['yearValue']=_this.yearValue;
+                    axios.get("/planValue/planValueSummary",arr).then(res=>{
+                        console.log(res);
+                        if(res.data.code === 200){
+                            this.tableData[0].planValue = res.data.data.value;
+                        }else {
+                            this.tableData[0].planValue = 0;
+                        }
+                    });
+                    _this.getPlanValues();
+
                     _this.loadFalg = false;
                 }).catch(err=>{
                     this.$message.error('发生错误');
@@ -643,6 +656,7 @@
                 });
             },
 
+
             fixProjectSubmit(){
                 let data ={params: {}};
                 let  _this = this;
@@ -686,6 +700,23 @@
                     console.log(err);
                 });
                 this.goNPage(1);
+            },
+
+            getPlanValues(){
+                let _this = this;
+                for (let i=1;i<_this.tableData.length;i++){
+                    let arr={params:{}};
+                    arr['params']['projectId'] = _this.tableData[i].projectId
+                    arr['params']['yearValue'] = _this.yearValue;
+
+                    axios.get("/planValue/planValue",arr).then(res=>{
+                        if(res.data.code == 200){
+                            _this.tableData[i].planValue = res.data.data.planValue;
+                        }
+                    })
+
+
+                }
             },
             test(){
                 let arr = {params:{}};
