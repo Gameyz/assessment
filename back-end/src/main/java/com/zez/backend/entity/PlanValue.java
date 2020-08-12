@@ -2,7 +2,9 @@ package com.zez.backend.entity;
 
 import java.io.Serializable;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -18,8 +20,7 @@ import org.springframework.data.elasticsearch.annotations.Parent;
  * @since 2020-08-05
  */
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(indexName = "project_index",type = "plan_value")

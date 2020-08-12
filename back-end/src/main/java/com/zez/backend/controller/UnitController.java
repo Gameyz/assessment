@@ -39,7 +39,6 @@ public class UnitController {
     public CommonResult<Object> listAllUnit(){
         List<Unit> unitList = unitService.listAllUnit();
         unitList.add(0, Unit.AllFlag());
-        System.out.println(unitList.toString());
         return new CommonResult<>().success("OK!",unitList);
     }
 }

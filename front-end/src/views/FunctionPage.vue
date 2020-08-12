@@ -41,7 +41,7 @@
                 <el-button type="success" @click="search">查询</el-button>
                 <el-button type="success" @click="newProject">新增项目</el-button>
                 <el-button type="success" @click="fixProject">修改项目</el-button>
-                <el-button type="success">保存</el-button>
+                <el-button type="success" @click="saveData">保存</el-button>
             </el-form>
         </div>
 
@@ -81,7 +81,7 @@
                                     v-show="rowBeingEdited===scope.$index"
                                     v-model="scope.row.planValue"
                                     :ref='"input"+scope.$index'
-                                    @blur="loseFocus"
+                                    @blur="tableIntPutLoseFocus(scope.$index)"
                             />
                         </template>
                     </el-table-column>
@@ -259,9 +259,7 @@
 
         </div>
 
-        <div clas="test">
-            <el-button @click="test">test</el-button>
-        </div>
+
 
 
     </div>
@@ -328,7 +326,9 @@
                         unitName: '',
                         constructionNatureId:null,
                         constructionNatureName: "",
-                        planValue: "200",
+                        planValue: 0,
+                        modifyFlag:false,
+                        oldPlanValue:0,
                     },
                 ],
                 rowBeingEdited: -1,
@@ -599,11 +599,11 @@
 
                     arr['params']['yearValue']=_this.yearValue;
                     axios.get("/planValue/planValueSummary",arr).then(res=>{
-                        console.log(res);
+
                         if(res.data.code === 200){
-                            this.tableData[0].planValue = res.data.data.value;
+                            this.tableData[0].planValue = res.data.data.value.toFixed(2);
                         }else {
-                            this.tableData[0].planValue = 0;
+                            this.tableData[0].planValue = 0.00;
                         }
                     });
                     _this.getPlanValues();
@@ -623,7 +623,6 @@
                     if(res.data.code === 200){
                         _this.newProjectData[0].value =  res.data.data;
                         _this.newProjectDialogTableVisible=true;
-                        console.log(_this.newProjectData[0].value);
                     }
                 })
 
@@ -639,7 +638,7 @@
                 data["unitId"]=this.newProjectData[2].value[0];
                 data["subUnitId"]=this.newProjectData[2].value[1];
                 data["constructionNatureId"]=this.newProjectData[3].value;
-                console.log(data);
+
                 axios.post("/project/add",data).then(res=>{
                     if(res.data.code === 200){
                         this.$message({
@@ -669,7 +668,7 @@
 
                 axios.put("/project/update",data).then(res=>{
                     if(res.data.code === 200){
-                        this.$message({
+                        _this.$message({
                             message: '操作成功',
                             type: 'success',
                         });
@@ -706,26 +705,81 @@
                 let _this = this;
                 for (let i=1;i<_this.tableData.length;i++){
                     let arr={params:{}};
-                    arr['params']['projectId'] = _this.tableData[i].projectId
+                    arr['params']['projectId'] = _this.tableData[i].projectId;
                     arr['params']['yearValue'] = _this.yearValue;
 
                     axios.get("/planValue/planValue",arr).then(res=>{
                         if(res.data.code == 200){
-                            _this.tableData[i].planValue = res.data.data.planValue;
+                            _this.tableData[i].planValue = res.data.data.planValue.toFixed(2);
+                            _this.tableData[i].oldPlanValue = res.data.data.planValue;
                         }
-                    })
+                    }).catch(err=>{
+                        console.log(err);
+                    });
 
 
                 }
             },
-            test(){
-                let arr = {params:{}};
-                arr.params['yearValue'] = this.yearValue;
-                axios.get("http://localhost:8081/planValue/planValueSummary",arr)
-                    .then(res=>{
-                        console.log(res.data);
-                    })
-            }
+            saveData(){
+                console.log("saveData！")
+               if(this.modifyFlag){
+                   let _this = this;
+
+                   if(this.yearValue=== undefined||this.yearValue=== null){
+                       this.$message({
+                           message: '未选择年份',
+                           type: 'warning'
+                       });
+                       return
+                   }
+                   console.log(this.tableData.length);
+                   for (let i = 1;i<this.tableData.length;i++){
+                       if(_this.tableData[i].modifyFlag){
+                           let arr = {}
+                           arr['yearValue']=_this.yearValue;
+                           arr['projectId']=_this.tableData[i].projectId;
+                           arr['planValue']=_this.tableData[i].planValue;
+                           console.log(arr);
+                           axios.post("/planValue/planValue",arr)
+                               .then(res=>{
+                                   if(res.data.code === 200){
+                                       _this.$message({
+                                           message: '操作成功',
+                                           type: 'success',
+                                       });
+                                       _this.goNPage(_this.pageNum);
+                                   }
+                               }).catch(err=>{
+                               console.log(err);
+                           })
+                       }
+
+                   }
+               }
+            },
+
+            tableIntPutLoseFocus: function (rowNum) {
+                this.rowBeingEdited = -1;
+                let rowData = this.tableData[rowNum];
+                let f = parseFloat(rowData.planValue.toString());
+                if (isNaN(f)||f>100||f<0){
+                    this.$message.error('计划值是区间(0,100)的数字哦！');
+                    rowData.planValue = rowData.oldPlanValue;
+                }
+                else {
+                    let sum = parseFloat( this.tableData[0].planValue.toString());
+                    console.log(sum);
+
+                    this.tableData[0].planValue= (sum - parseFloat(rowData.oldPlanValue.toString()) + f).toFixed(2);
+                    rowData.planValue = f.toFixed(2);
+
+                    rowData.oldPlanValue = rowData.planValue;
+                    rowData.modifyFlag = true;
+                    this.modifyFlag = true;
+                }
+                console.log(this.modifyFlag);
+            },
+
         },
 
 

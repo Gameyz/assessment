@@ -20,4 +20,6 @@ public class TableRowData {
     private Integer constructionNatureId;
     private String constructionNatureName;
     private Double planValue;
+    private Boolean  modifyFlag;
+    private Double oldPlanValue;
 }

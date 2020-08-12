@@ -76,7 +76,7 @@ public class ProjectController {
 
     @PostMapping("/add")
     public CommonResult<Object> addProject( @RequestBody Project project){
-        System.out.println(project.toString());
+
 
         Integer integer = projectService.insertProject(project);
         return CommonResult.succ("ok!",integer);
@@ -100,7 +100,7 @@ public class ProjectController {
                                             @RequestParam(name = "projectId", required = false) String projectId,
                                             @RequestParam(name = "projectName", required = false) String projectName){
 
-        System.out.println(constructionNature==null);
+
         int pageNum = Integer.parseInt(page);
         int pageSize = Integer.parseInt(size);
 
@@ -151,6 +151,8 @@ public class ProjectController {
                             allunitname,
                             project.getConstructionNatureId(),
                             constructionNatureName,
+                            0.0,
+                            false,
                             0.0
                     )
             );

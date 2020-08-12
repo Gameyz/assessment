@@ -4,6 +4,8 @@ package com.zez.backend.controller;
 import com.zez.backend.common.CommonResult;
 import com.zez.backend.entity.PlanValue;
 import com.zez.backend.service.IPlanValueService;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +13,7 @@ import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 
 /**
@@ -23,7 +26,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/planValue")
+@Slf4j
 public class PlanValueController {
+
+
 
     @Autowired
     public void setPlanValueService(IPlanValueService planValueService){
@@ -93,6 +99,17 @@ public class PlanValueController {
 
     @PostMapping("/planValue")
     public CommonResult<Object> postPlanValue(@RequestBody PlanValue planValue){
+
+
+        if(planValue.getYearValue() == null){
+            return CommonResult.fail(400,"项目id:"+planValue.getProjectId()+"未选择时间");
+        }
+        String yearValue = planValue.getYearValue().substring(0,4);
+        String planValueId = yearValue+planValue.getProjectId();
+        planValue.setYearValue(yearValue);
+        planValue.setPlanValueId(planValueId);
+
+        log.info("Save "+ planValue.toString());
         Integer integer = this.planValueService.insertPlanValue(planValue);
         return CommonResult.succ("OK",integer);
     }
