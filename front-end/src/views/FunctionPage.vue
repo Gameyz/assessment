@@ -559,10 +559,14 @@
                     this.$message.error('页码不能小于1');
                     return;
                 }
-                if(n>this.totalPages){
-
-                    n=_this.totalPages
+                if (this.totalPages === undefined){
+                    this.totalPages=0;
                 }
+                if(n > this.totalPages){
+                    n= 1;
+                }
+
+
 
                 let arr={params:{}};
                 arr['params']['size'] = this.maxRowsNumOfTable;
@@ -604,8 +608,10 @@
                     _this.endRecordingNumber = _this.nowPageNum*_this.maxRowsNumOfTable>_this.totalRecordingNumber?_this.totalRecordingNumber: _this.nowPageNum*_this.maxRowsNumOfTable;
 
 
+
                     arr['params']['yearValue']=_this.yearValue;
                     axios.get("/planValue/planValueSummary",arr).then(res=>{
+
 
                         if(res.data.code === 200){
                             this.tableData[0].planValue = res.data.data.value.toFixed(2);

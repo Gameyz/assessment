@@ -58,7 +58,7 @@
             </el-row>
 
             <el-row :gutter="20">
-                <el-col :span="12">
+                <el-col :span="11">
                     <div class="table" style="width: 800px">
                         <el-table
                                 :data="tableData"
@@ -99,7 +99,7 @@
                         </div>
                     </div>
                 </el-col>
-                <el-col :span="12">
+                <el-col :span="11">
                     <div class="plan">
                         <div id="set4" style="height: 300px; width: 300px"></div>
                     </div>
@@ -174,7 +174,7 @@
                         show:false,
                         type: 'category',
                         boundaryGap: false,
-                        data: ['1', '2', '3', '4', '5', '6', '7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26']
+                        data: ['1', '2', '3', '4', '5', '6', '7','8','9',`11`,'10','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26']
                     },
                     yAxis: {
                         show:false,
