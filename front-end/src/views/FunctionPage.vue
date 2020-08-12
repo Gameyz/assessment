@@ -172,7 +172,7 @@
                                       v-model="newProjectData[1].value "
                                       v-show="newProjectDataEdited===scope.$index"
                                       :ref='"newProjectInput"+scope.$index'
-                                      @blur="loseFocus"
+                                      @blur="newProjectloseFocus"
                             />
 
                             <el-cascader
@@ -226,7 +226,7 @@
                                       v-model="fixProjectData[1].value "
                                       v-show="fixProjectDataEdited===scope.$index"
                                       :ref='"fixProjectInput"+scope.$index'
-                                      @blur="loseFocus"
+                                      @blur="fixProjectloseFocus"
                             />
 
                             <el-cascader
@@ -506,14 +506,14 @@
                         type: 'warning'
                     });
                 } else {
-                    console.log(this.currentRow);
+
 
                     this.fixProjectData[0].value = this.currentRow.projectId;
                     this.fixProjectData[1].value = this.currentRow.projectName;
                     this.fixProjectData[2].value = this.currentRow.unitId;
                     this.fixProjectData[3].value = this.currentRow.constructionNatureId;
 
-                    console.log(this.fixProjectData);
+
                     this.fixProjectDialogTableVisible = true;
                 }
             },
@@ -559,6 +559,11 @@
                     this.$message.error('页码不能小于1');
                     return;
                 }
+                if(n>this.totalPages){
+
+                    n=_this.totalPages
+                }
+
                 let arr={params:{}};
                 arr['params']['size'] = this.maxRowsNumOfTable;
                 arr['params']['page'] = n-1;
@@ -596,6 +601,8 @@
 
                     _this.totalRecordingNumber = res.data.data.totalElements;
                     _this.frontRecordingNumber = (_this.nowPageNum-1)*_this.maxRowsNumOfTable;
+                    _this.endRecordingNumber = _this.nowPageNum*_this.maxRowsNumOfTable>_this.totalRecordingNumber?_this.totalRecordingNumber: _this.nowPageNum*_this.maxRowsNumOfTable;
+
 
                     arr['params']['yearValue']=_this.yearValue;
                     axios.get("/planValue/planValueSummary",arr).then(res=>{
@@ -610,6 +617,7 @@
 
                     _this.loadFalg = false;
                 }).catch(err=>{
+                    console.log(err);
                     this.$message.error('发生错误');
                 });
 
@@ -629,6 +637,27 @@
             },
 
             addProject(){
+
+                let regEn = new RegExp(/[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im);
+                let regCn = new RegExp(/[·！＆＼‰#￥（——）：；“”‘、，|《。》？、【】[\]]/im);
+
+
+                if(regEn.test(this.newProjectData[1].value) || regCn.test(this.newProjectData[1].value)){
+                    this.$message({
+                        message: '存在特殊字符',
+                        type: 'warning',
+                    });
+                    return
+                }
+
+                if(this.newProjectData[1].value.length>100){
+                    this.$message({
+                        message: '项目名长度应小于100',
+                        type: 'warning',
+                    });
+                    return
+                }
+
                 let data ={params: {}};
                 let  _this = this;
 
@@ -647,6 +676,7 @@
                         });
                     }
                     _this.newProjectDialogTableVisible = false
+                    _this.goNPage(this.pageNum);
                 }).catch(err=>{
                     console.log(err);
                     this.$message.error('发生错误');
@@ -657,6 +687,30 @@
 
 
             fixProjectSubmit(){
+
+
+                /**参数校验*/
+                //let regs = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
+
+                let regEn = new RegExp(/[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im);
+                let regCn = new RegExp(/[·！＆＼‰#￥（——）：；“”‘、，|《。》？、【】[\]]/im);
+
+
+                if(regEn.test(this.fixProjectData[1].value) || regCn.test(this.fixProjectData[1].value)){
+                    this.$message({
+                        message: '存在特殊字符',
+                        type: 'warning',
+                    });
+                    return
+                }
+
+                if(this.fixProjectData[1].value.length>100){
+                    this.$message({
+                        message: '项目名长度应小于100',
+                        type: 'warning',
+                    });
+                    return
+                }
                 let data ={params: {}};
                 let  _this = this;
 
@@ -666,6 +720,7 @@
                 data["subUnitId"]=this.fixProjectData[2].value[1];
                 data["constructionNatureId"]=this.fixProjectData[3].value;
 
+
                 axios.put("/project/update",data).then(res=>{
                     if(res.data.code === 200){
                         _this.$message({
@@ -674,6 +729,7 @@
                         });
                     }
                     _this.fixProjectDialogTableVisible = false
+                    _this.goNPage(this.pageNum);
 
                 }).catch(err=>{
                     console.log(err);
@@ -721,7 +777,7 @@
                 }
             },
             saveData(){
-                console.log("saveData！")
+
                if(this.modifyFlag){
                    let _this = this;
 
@@ -732,14 +788,14 @@
                        });
                        return
                    }
-                   console.log(this.tableData.length);
+
                    for (let i = 1;i<this.tableData.length;i++){
                        if(_this.tableData[i].modifyFlag){
                            let arr = {}
                            arr['yearValue']=_this.yearValue;
                            arr['projectId']=_this.tableData[i].projectId;
                            arr['planValue']=_this.tableData[i].planValue;
-                           console.log(arr);
+
                            axios.post("/planValue/planValue",arr)
                                .then(res=>{
                                    if(res.data.code === 200){
@@ -757,6 +813,27 @@
                    }
                }
             },
+            newProjectloseFocus(){
+                this.newProjectDataEdited=-1;
+                if(this.newProjectData[1].value===""){
+                    this.newProjectData[1].value="新建项目名";
+                    this.$message({
+                        message: '项目名不能为空',
+                        type: 'warning'
+                    });
+                }
+            },
+            fixProjectloseFocus(){
+                this.fixProjectDataEdited=-1;
+                if(this.fixProjectData[1].value===""){
+                    this.fixProjectData[1].value="新建项目名";
+                    this.$message({
+                        message: '项目名不能为空',
+                        type: 'warning'
+                    });
+                }
+            },
+
 
             tableIntPutLoseFocus: function (rowNum) {
                 this.rowBeingEdited = -1;
@@ -768,7 +845,7 @@
                 }
                 else {
                     let sum = parseFloat( this.tableData[0].planValue.toString());
-                    console.log(sum);
+
 
                     this.tableData[0].planValue= (sum - parseFloat(rowData.oldPlanValue.toString()) + f).toFixed(2);
                     rowData.planValue = f.toFixed(2);
@@ -777,7 +854,7 @@
                     rowData.modifyFlag = true;
                     this.modifyFlag = true;
                 }
-                console.log(this.modifyFlag);
+
             },
 
         },
