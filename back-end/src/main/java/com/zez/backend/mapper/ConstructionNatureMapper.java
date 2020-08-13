@@ -20,6 +20,16 @@ import java.util.LinkedList;
 @Component
 public interface ConstructionNatureMapper {
 
+    /**
+     * 根据id获取数据库中建设性质
+     * @param id id字段
+     * @return 建设性质
+     */
     ConstructionNature getConstructionNatureById(@Param("id") Integer id);
+
+    /**
+     * 获取所有的建设性质
+     * @return 建设性质列表
+     */
     LinkedList<ConstructionNature> listAllConstructionNature();
 }

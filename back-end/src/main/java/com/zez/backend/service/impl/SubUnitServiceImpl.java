@@ -36,7 +36,7 @@ public class SubUnitServiceImpl implements ISubUnitService {
 
 
     @Override
-    public String findSubUnitNameByID(Integer id){
+    public String findSubUnitNameById(Integer id){
         if(null == id){
             return "";
         }

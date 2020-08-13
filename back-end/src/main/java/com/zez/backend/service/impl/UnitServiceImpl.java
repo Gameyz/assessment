@@ -43,13 +43,10 @@ public class UnitServiceImpl implements IUnitService {
         return unitMapper.listAllUnit();
     }
 
-    @Override
-    public Map<Integer, String> getIdNameMap(){
-        return null;
-    }
+
 
     @Override
-    public String findUnitNameByID(Integer id){
+    public String findUnitNameById(Integer id){
         if(null == id){
             return "";
         }

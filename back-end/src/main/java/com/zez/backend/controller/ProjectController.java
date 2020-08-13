@@ -109,7 +109,6 @@ public class ProjectController {
         int pageSize = Integer.parseInt(size);
 
         BoolQueryBuilder bqb = QueryBuilders.boolQuery();
-
         if (null != unit){
             bqb.must(QueryBuilders.matchQuery("unitId",unit));
         }
@@ -118,7 +117,6 @@ public class ProjectController {
         }
         if (null != constructionNature){
             bqb.must(QueryBuilders.matchQuery("constructionNatureId",constructionNature));
-
         }
         if (null != projectId){
             bqb.must(QueryBuilders.matchQuery("projectId",projectId));
@@ -145,7 +143,7 @@ public class ProjectController {
         content) {
 
             Integer[] unitId = new Integer[]{project.getUnitId(),project.getSubUnitId()};
-            String allunitname = unitservice.findUnitNameByID(project.getUnitId())+"/"+subUnitService.findSubUnitNameByID(project.getSubUnitId());
+            String allunitname = unitservice.findUnitNameByID(project.getUnitId())+"/"+subUnitService.findSubUnitNameById(project.getSubUnitId());
             String constructionNatureName = constructionNatureService.getConstructionNatureName(project.getConstructionNatureId());
             list.add(
                     new TableRowData(

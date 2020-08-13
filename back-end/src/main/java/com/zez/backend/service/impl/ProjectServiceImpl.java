@@ -28,7 +28,7 @@ public class ProjectServiceImpl implements IProjectService {
     private ProjectDataRepository projectDataRepository;
 
     @Override
-    public Integer UpdateProjectById(Project project){
+    public Integer updateProjectById(Project project){
         projectDataRepository.save(project);
         return projectMapper.updateProjectById(project);
     }

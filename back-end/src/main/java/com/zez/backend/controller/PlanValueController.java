@@ -12,7 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -61,6 +64,7 @@ public class PlanValueController {
             @RequestParam(name = "yearValue", required = false)String data){
 
         if(null == data){
+            log.warn("Can not save get planValueSummary,because yearValue is null.");
             return CommonResult.fail(400,"年份为空");
         }
 
@@ -70,6 +74,14 @@ public class PlanValueController {
         Terms sum = (Terms)search.getAggregation("SUM");
 
         if(sum.getBuckets().isEmpty()){
+            Map <String, Object> map = new HashMap<>();
+            map.put("unit",unitId);
+            map.put("subUnit",subUnitId);
+            map.put("constructionNatureId",constructionNatureId);
+            map.put("projectId",projectId);
+            map.put("projectName",projectName);
+            map.put("yearValue",yearValue);
+            log.warn("can not find planValue of params:"+map.toString());
             return CommonResult.fail(404,"未找到");
         }else {
             return CommonResult.succ("OK",sum.getBuckets().get(0).getAggregations().getAsMap().get("sum_value"));

@@ -2,7 +2,6 @@ package com.zez.backend.service;
 
 
 import com.zez.backend.entity.Project;
-
 import java.util.List;
 
 /**
@@ -15,10 +14,25 @@ import java.util.List;
  */
 public interface IProjectService {
 
-    Integer UpdateProjectById(Project project);
+    /**
+     * 通过 项目id修改项目（es和mysql）
+     * @param project 项目的实体类
+     * @return 影响的行数
+     */
+    Integer updateProjectById(Project project);
 
+    /**
+     * 插入项目（es 和 mysql）
+     * @param project 项目的实体类
+     * @return 影响的行数
+     */
     Integer insertProject(Project project);
 
-    Integer insertList(List<Project> planValues);
+    /**
+     * 批量插入项目
+     * @param Projects 项目的列表
+     * @return 影响的行数
+     */
+    Integer insertList(List<Project> Projects);
 
 }
