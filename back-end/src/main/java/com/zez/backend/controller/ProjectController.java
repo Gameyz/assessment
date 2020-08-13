@@ -10,6 +10,7 @@ import com.zez.backend.service.IConstructionNatureService;
 import com.zez.backend.service.IProjectService;
 import com.zez.backend.service.ISubUnitService;
 import com.zez.backend.service.IUnitService;
+import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import java.util.UUID;
  * @author Purple
  * @since 2020-08-05
  */
+@Slf4j
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
@@ -69,6 +71,7 @@ public class ProjectController {
 
     @PutMapping("/update")
     public CommonResult<Object> updateProject(@RequestBody Project project){
+        log.info("UPDATE "+project.toString());
         Integer integer = projectService.UpdateProjectById(project);
         return CommonResult.succ("OK!", integer);
 
@@ -78,6 +81,7 @@ public class ProjectController {
     public CommonResult<Object> addProject( @RequestBody Project project){
 
 
+        log.info("SAVE "+project.toString());
         Integer integer = projectService.insertProject(project);
         return CommonResult.succ("ok!",integer);
     }

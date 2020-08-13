@@ -21,7 +21,6 @@ import java.util.List;
  * @Date 2020/8/12
  */
 @RestController
-@RequestMapping("/test")
 public class TestController {
     @Autowired
     private PlanValueRepository planValueRepository;
@@ -34,6 +33,10 @@ public class TestController {
     private IPlanValueService planValueService;
 
 
+    @GetMapping("/test")
+    public String test(){
+        return "OK";
+    }
     @GetMapping("/test02")
     public Object test02(){
 

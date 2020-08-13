@@ -1,65 +1,146 @@
 <template>
     <div>
         <div class="st_page">
-            <div class="sf_top">
+            <el-row>
 
-            </div>
+            </el-row>
 
-            <el-row :gutter="20">
-                <el-col :span="4">
+            <el-row type="flex" justify="center">
+                <el-col :span="5">
                     <div class="row11">
-                        <p>投资计划</p>
-                        <h2>2000KM 1560万KVA</h2>
-                        <div id="set11" style="height:100px;width:300px;"/>
+                        <span  style="font-size: 15px;color:#909399;" >投资计划</span>
+                        <p  style="font-size: 30px; text-align: center" >126,560万元 10000个</p>
+                        <div id="set11"  class="line_chart"/>
+                        <p style="font-size: 15px;color: #606266;padding: 0px 50px 5px 50px">主网65600 城网60000 农网60000</p>
                     </div>
                 </el-col>
-                <el-col :span="4">
+                <el-col :span="5">
                     <el-col :span="4">
                         <div class="row11">
-                            <p>投资计划</p>
-                            <h2>2000KM 1560万KVA</h2>
-                            <div id="set12" style="height:100px;width:300px;"/>
+                            <span style="font-size: 15px;color:#909399;">新开工</span>
+                            <p  style="font-size: 30px; text-align: center" >2000万元 7000个</p>
+                            <div id="set12" class="line_chart"/>
+                            <p style="color: #606266;padding: 0px 50px 5px 50px">占年度计划比例  70%</p>
                         </div>
                     </el-col>
 
                 </el-col>
-                <el-col :span="4">
+                <el-col :span="5">
                     <el-col :span="4">
                         <div class="row11">
-                            <p>投资计划</p>
-                            <h2>2000KM 1560万KVA</h2>
-                            <div id="set13" style="height:100px;width:300px;"/>
+                            <span style="font-size: 15px;color:#909399;">续建</span>
+                            <p  style="font-size: 30px; text-align: center" >6560万元 3000个</p>
+                            <div id="set13" class="line_chart"/>
+                            <p style="color: #606266;padding: 0px 50px 5px 50px">占年度计划比例  30%</p>
                         </div>
                     </el-col>
-
                 </el-col>
-                <el-col :span="4">
+                <el-col :span="5">
                     <div class="row11">
-                        <p>投资计划</p>
-                        <h2>2000KM 1560万KVA</h2>
-                        <div id="set21" style="height:100px;width:300px;"></div>
+                        <span style="font-size: 15px;color:#909399;">新开工里程碑</span>
+                        <p  style="font-size: 30px; text-align: center" >2000KM 1560万KVA</p>
+                        <div id="set21" class="Histogram"></div>
+                        <p style="color: #606266;padding: 0px 50px 5px 50px">
+                            <span>必开<i class="el-icon-caret-top" style="color: rgb(150,220,116)"/> 85%  </span>
+                            <span style="float:right;">争开<i class="el-icon-caret-bottom" style="color: red"/>15%</span>
+                        </p>
                     </div>
-
                 </el-col>
-                <el-col :span="4">
+                <el-col :span="5">
                     <div class="row11">
-                        <p>投资计划</p>
-                        <h2>2000KM 1560万KVA</h2>
-                        <div id="set22" style="height:100px;width:300px;"></div>
+                        <span style="font-size: 15px;color:#909399;">投产里程碑</span>
+                        <p  style="font-size: 30px; text-align: center" >1000KM 750万KVA</p>
+                        <div id="set22" class="Histogram"></div>
+                        <p style="color: #606266;padding: 0px 50px 5px 50px" >项目个数  300</p>
                     </div>
-
                 </el-col>
             </el-row>
 
             <el-row>
-                <div class="row21">
-                    <div id="set3" style="height: 100px;width: 100px"></div>
-                </div>
+
+                <template>
+
+                    <el-carousel autoplay="false" arrow="always" indicator-position="none" height="170px" style="background-color: white;">
+                        <el-carousel-item>
+
+                            <el-col :span="22" :offset="1" style="border-left:1px rgb(235,235,235) solid;border-right: 1px rgb(235,235,235) solid ">
+                                <el-col :span="4">
+                                    <el-col :span="2" style="width: 100px;">
+                                        <p>三区两州</p>
+                                        <p>投资</p>
+                                        <p>3320</p>
+                                    </el-col>
+                                    <el-col :span="2">
+                                        <div id="set31" style="height: 170px;width: 170px;"></div>
+                                    </el-col>
+                                </el-col>
+
+                                <el-col :span="4">
+                                    <el-col :span="2" style="width: 100px;">
+                                        <p>三区两州</p>
+                                        <p>投资</p>
+                                        <p>3320</p>
+                                    </el-col>
+                                    <el-col :span="2">
+                                        <div id="set32" style="height: 170px;width: 170px;"></div>
+                                    </el-col>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-col :span="2" style="width: 100px;">
+                                        <p>三区两州</p>
+                                        <p>投资</p>
+                                        <p>3320</p>
+                                    </el-col>
+                                    <el-col :span="2">
+                                        <div id="set33" style="height: 170px;width: 170px;"></div>
+                                    </el-col>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-col :span="2" style="width: 100px;">
+                                        <p>三区两州</p>
+                                        <p>投资</p>
+                                        <p>3320</p>
+                                    </el-col>
+                                    <el-col :span="2">
+                                        <div id="set34" style="height: 170px;width: 170px;"></div>
+                                    </el-col>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-col :span="2" style="width: 100px;">
+                                        <p>三区两州</p>
+                                        <p>投资</p>
+                                        <p>3320</p>
+                                    </el-col>
+                                    <el-col :span="2">
+                                        <div id="set35" style="height: 170px;width: 170px;"></div>
+                                    </el-col>
+                                </el-col>
+
+                                <el-col :span="4">
+                                    <el-col :span="2" style="width: 100px;">
+                                        <p>三区两州</p>
+                                        <p>投资</p>
+                                        <p>3320</p>
+                                    </el-col>
+                                    <el-col :span="2">
+                                        <div id="set36" style="height: 170px;width: 170px;"></div>
+                                    </el-col>
+                                </el-col>
+                            </el-col>
+                        </el-carousel-item>
+
+                    </el-carousel>
+
+                </template>
             </el-row>
 
             <el-row :gutter="20">
-                <el-col :span="11">
-                    <div class="table" style="width: 800px">
+
+                <el-col :span="12">
+                    <div class="table" style="height: 324px;width: 100%;background-color: white;">
+                        <div style="height: 50px;width: 100%;border-bottom: 1px rgb(237,237,237) solid">
+                            <p style="font-weight: bold;">分单位投资计划</p>
+                        </div>
                         <el-table
                                 :data="tableData"
                                 style="width: 100%">
@@ -87,29 +168,31 @@
                             </el-table-column>
                         </el-table>
                         <div class="block">
-                            <el-pagination
-                                    @size-change="handleSizeChange"
-                                    @current-change="handleCurrentChange"
-                                    :current-page="currentPage4"
-                                    :page-sizes="[100, 200, 300, 400]"
-                                    :page-size="100"
-                                    layout="total, sizes, prev, pager, next, jumper"
-                                    :total="400">
+                            <el-pagination style="background-color: white;"
+                                           @size-change="handleSizeChange"
+                                           @current-change="handleCurrentChange"
+                                           :current-page="currentPage4"
+                                           :page-sizes="[100, 200, 300, 400]"
+                                           :page-size="100"
+                                           layout="total, sizes, prev, pager, next, jumper"
+                                           :total="400">
                             </el-pagination>
                         </div>
                     </div>
                 </el-col>
-                <el-col :span="11">
-                    <div class="plan">
-                        <div id="set4" style="height: 300px; width: 300px"></div>
+
+                <el-col :span="12">
+
+                    <div class="plan" style="height: 324px; background-color: white;">
+                        <div style="height: 50px;width: 100%;border-bottom: 1px rgb(237,237,237) solid">
+                            <p style="font-weight: bold;">分单位投资计划</p>
+                        </div>
+                        <div id="set4" style="height: 300px; width: 100%"/>
                     </div>
                 </el-col>
             </el-row>
-
         </div>
-
     </div>
-
 </template>
 
 <script>
@@ -117,6 +200,7 @@
         name: "StaticPage",
         data() {
             return {
+                ss:["set31","set32","set33","set34","set35","set36"],
                 currentPage1: 5,
                 currentPage2: 5,
                 currentPage3: 5,
@@ -174,11 +258,18 @@
                         show:false,
                         type: 'category',
                         boundaryGap: false,
-                        data: ['1', '2', '3', '4', '5', '6', '7','8','9',`11`,'10','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26']
+                        data: ['1', '2', '3', '4', '5', '6', '7','8','9',`11`,'10','12','13',
+                            '14','15','16','17','18','19','20','21','22','23','24','25','26']
                     },
                     yAxis: {
                         show:false,
                         type: 'value'
+                    },
+                    grid: {
+                        x: 10,
+                        y: 0,
+                        x2: 10,
+                        y2: 20,
                     },
 
                     series: [
@@ -220,11 +311,17 @@
                         }
                     },
                     grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
+                        x: 10,
+                        y: 0,
+                        x2: 10,
+                        y2: 20,
                     },
+                    // grid: {
+                    //     left: '3%',
+                    //     right: '4%',
+                    //     bottom: '3%',
+                    //     containLabel: true
+                    // },
                     xAxis: [
                         {
                             show:false,
@@ -305,21 +402,35 @@
                         data: ['10kV及以下','1000kV','500kV','110kV','220kV','其他'],
                         width:20
                     },
+                    title:{
+                        text:"总投资",
+                        left:"17%",
+                        top:"40%",
+                        textStyle:{
+                            color: "rgb(144, 147, 153)",
+                            fontWeight:"lighter",
+                            fontSize:15,
+                            align:"center"
+                        }
+                    },
+
                     graphic:{       //图形中间文字
                         type:"text",
-                        left:"center",
-                        top:"center",
+                        left:"13%",
+                        top:"50%",
                         style:{
-                            text:"总投资\n\n￥ 166.00",
+                            text:"￥ 166.00",
                             textAlign:"center",
                             fontSize:30
                         }
                     },
+
                     series: [
                         {
-                            name: '访问来源',
+                            name: '分单位投资计划',
                             type: 'pie',
-                            radius: ['50%', '70%'],
+                            radius: ['60%', '80%'],
+                            center:['20%',"50%"],
                             avoidLabelOverlap: false,
                             label: {
                                 show: false,
@@ -342,8 +453,10 @@
                                 {value: 10, name: '500kV'},
                                 {value: 15, name: '110kV'},
                                 {value: 13, name: '220kV'},
-                                {value:12,name:'其他'}
+                                {value:12,name:'其他',selected:true}
                             ],
+
+
                             itemStyle:{
                                 normal: {
                                     borderWidth: 5,
@@ -362,36 +475,72 @@
                 this.set1("set13");
                 this.set2("set21");
                 this.set2("set22");
-                this.set3("set3");
+                this.set3("set31");
+                this.set3("set32");
+                this.set3("set33");
+                this.set3("set34");
+                this.set3("set35");
+                this.set3("set36");
                 this.set4("set4");
             },
         },
         mounted:function(){
             this.inits();//需要触发的函数
+        },
+        beforeCreate() {
+            document.querySelector('body').setAttribute('style','background-color:rgb(245,245,245)')
+            },
+        beforeDestroy(){
+            document.querySelector('body').setAttribute('style', "background-color:''")
         }
 
     }
 
 </script>
 
-<style scoped>
-    .st_page{
-        background-color: rgb(240,242,245);
-        width: 100%;
-        height: 100%;
+<style>
+    .el-row {
+        margin-bottom: 5px;
     }
     .sf_top{
         height: 30px;
-        width: 100%;
-        border: red 1px solid;
+    }
+    .el-carousel__item{
+        background-color:#ffffff;
+        border: 1px solid #e5e5e5;
+        width: 30%;
+        left: 10%;
+        height: 240px;
+    }
+    .el-carousel__item .Carousel{
+        border-bottom: 1px solid #f1f4f8;
+        display: block;
     }
     .row11{
+        padding: 10px;
         background-color: white;
-        height: 200px;
-        width: 300px;
+        height: 250px;
+        width: 350px;
         margin: 5px;
+        border: 2px rgb(235,235,235) solid;
+        border-radius: 2px;
+    }
+    .row21{
+    border:1px rgb(235,235,235);
     }
     .plan{
         background-color: white;
     }
+    .line_chart{
+        border-bottom: 1px solid rgb(238,238,238);
+        width:350px;
+        height:90px;
+    }
+    .Histogram{
+        border-bottom: 1px solid rgb(238,238,238);
+        width: 350px;
+        height: 90px;
+    }
+
 </style>
+
