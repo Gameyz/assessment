@@ -5,6 +5,7 @@ import com.zez.backend.elasticSearch.repository.PlanValueRepository;
 import com.zez.backend.entity.PlanValue;
 import com.zez.backend.mapper.PlanValueMapper;
 import com.zez.backend.service.IPlanValueService;
+import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.join.query.JoinQueryBuilders;
@@ -28,6 +29,7 @@ import java.util.List;
  * @author Purple
  * @since 2020-08-05
  */
+@Slf4j
 @Service
 public class PlanValueServiceImpl implements IPlanValueService {
 
@@ -42,8 +44,14 @@ public class PlanValueServiceImpl implements IPlanValueService {
 
     @Override
     public Integer insertPlanValue(PlanValue planValue){
+        log.info("Inster into mysql start "+planValue.toString());
+        Integer integer = planValueMapper.insertPlanValue(planValue);
+        log.info("Insert into mysql complete "+planValue.toString());
+
+        log.info("Inster into ES start："+planValue.toString());
         planValueRepository.save(planValue);
-        return planValueMapper.insertPlanValue(planValue);
+        log.info("Insert into ES complete："+planValue.toString());
+        return integer;
     }
 
     @Override
@@ -51,9 +59,15 @@ public class PlanValueServiceImpl implements IPlanValueService {
 
         PlanValue value = planValueRepository.findById(id).get();
         value.setPlanValue(planValue);
-        planValueRepository.save(value);
+        log.info("UPDATE mysql start："+planValue.toString());
+        Integer integer = planValueMapper.updatePlanValueById(id, planValue);
+        log.info("UPDATE mysql complete:"+planValue.toString());
 
-        return planValueMapper.updatePlanValueById(id,planValue);
+        log.info("UPDATE ES start："+planValue.toString());
+        planValueRepository.save(value);
+        log.info("UPDATE ES complete:"+planValue.toString());
+
+        return integer;
     }
 
 
@@ -64,8 +78,8 @@ public class PlanValueServiceImpl implements IPlanValueService {
                                             Integer constructionNatureId,
                                             String projectId,
                                             String yearValue){
-        BoolQueryBuilder bqb = QueryBuilders.boolQuery();
 
+        BoolQueryBuilder bqb = QueryBuilders.boolQuery();
         if (null != unitId){
             bqb.must(QueryBuilders.matchQuery("unitId",unitId));
         }

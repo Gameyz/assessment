@@ -72,7 +72,7 @@ public class ProjectController {
     @PutMapping("/update")
     public CommonResult<Object> updateProject(@RequestBody Project project){
         log.info("UPDATE "+project.toString());
-        Integer integer = projectService.UpdateProjectById(project);
+        Integer integer = projectService.updateProjectById(project);
         return CommonResult.succ("OK!", integer);
 
     }
@@ -143,7 +143,7 @@ public class ProjectController {
         content) {
 
             Integer[] unitId = new Integer[]{project.getUnitId(),project.getSubUnitId()};
-            String allunitname = unitservice.findUnitNameByID(project.getUnitId())+"/"+subUnitService.findSubUnitNameById(project.getSubUnitId());
+            String allunitname = unitservice.findUnitNameById(project.getUnitId())+"/"+subUnitService.findSubUnitNameById(project.getSubUnitId());
             String constructionNatureName = constructionNatureService.getConstructionNatureName(project.getConstructionNatureId());
             list.add(
                     new TableRowData(

@@ -21,6 +21,9 @@ import java.util.List;
 @Service
 public class ConstructionNatureServiceImpl implements IConstructionNatureService {
 
+    /**
+     * ConstructionNature Redis存储的key前缀
+     */
     private final static String KEY_PREFIX = "ConstructionNature";
 
     private ConstructionNatureMapper constructionNatureMapper;
@@ -29,14 +32,11 @@ public class ConstructionNatureServiceImpl implements IConstructionNatureService
         this.constructionNatureMapper = constructionNatureMapper;
     }
 
-    private RedisTemplate stringObjectRedisTemplate;
+    private RedisTemplate<String, Object> stringObjectRedisTemplate;
     @Autowired
-    public void setStringObjectRedisTemplate(RedisTemplate stringObjectRedisTemplate){
+    public void setStringObjectRedisTemplate(RedisTemplate<String, Object> stringObjectRedisTemplate){
         this.stringObjectRedisTemplate = stringObjectRedisTemplate;
     }
-
-
-
 
 
     @Override
