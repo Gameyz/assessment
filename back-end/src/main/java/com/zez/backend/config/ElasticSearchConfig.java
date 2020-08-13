@@ -9,6 +9,7 @@ import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.net.UnknownHostException;
 import java.net.InetAddress;
 
 /**
