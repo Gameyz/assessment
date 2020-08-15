@@ -7,8 +7,11 @@
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
 
-    <root level="INFO">
+    <root>
         <appender-ref ref="LOGSTASH"/>
+    </root>
+
+    <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>

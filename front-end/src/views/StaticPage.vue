@@ -78,8 +78,8 @@
                 <template>
                     <el-carousel :autoplay="false" arrow="always" indicator-position="none" height="170px" style="background-color: white;">
                         <el-carousel-item>
-                            <el-col :span="22" :offset="1" style="border-left:1px rgb(235,235,235) solid;border-right: 1px rgb(235,235,235) solid ">
-                                <el-col :span="4">
+                            <el-col :span="22" :offset="1" style="border-left:1px rgb(235,235,235) solid;border-right: 1px rgb(235,235,235) solid">
+                                <el-col :span="4" @onmouseover="">
                                     <el-col :span="2" style="width: 100px;">
                                         <p style="font-size: 20px;color:rgb(112,112,113);">三区两州</p>
                                         <p style="font-size: 15px;color:#909399;">投资</p>
