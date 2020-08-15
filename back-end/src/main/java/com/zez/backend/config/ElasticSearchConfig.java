@@ -1,6 +1,7 @@
 package com.zez.backend.config;
 
 import org.apache.http.HttpHost;
+import org.elasticsearch.client.Client;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -8,6 +9,11 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.convert.ElasticsearchConverter;
+import org.springframework.data.elasticsearch.core.convert.MappingElasticsearchConverter;
+import org.springframework.data.elasticsearch.core.mapping.SimpleElasticsearchMappingContext;
 
 import java.net.UnknownHostException;
 import java.net.InetAddress;
@@ -26,6 +32,21 @@ public class ElasticSearchConfig {
         return restClient;
 
     }
+
+//    @Bean
+//    public ElasticsearchTemplate elasticsearchTemplate(Client client, ElasticsearchConverter converter) {
+//        return new ElasticsearchTemplate(client,converter);
+//    }
+//
+//    @Bean
+//    public ElasticsearchConverter elasticsearchConverter(SimpleElasticsearchMappingContext mappingContext){
+//        return new MappingElasticsearchConverter(mappingContext);
+//    }
+//
+//    @Bean
+//    public SimpleElasticsearchMappingContext mappingContext(){
+//        return new SimpleElasticsearchMappingContext();
+//    }
 
 
 

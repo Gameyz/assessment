@@ -17,8 +17,6 @@ public class CommonResult<T> {
     private String message;
     private T data;
 
-
-
     public CommonResult<T> success(String message, T data){
         this.setCode(200);
         this.setMessage(message);

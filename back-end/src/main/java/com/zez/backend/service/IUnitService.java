@@ -2,10 +2,7 @@ package com.zez.backend.service;
 
 
 import com.zez.backend.entity.Unit;
-
-
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -22,9 +19,6 @@ public interface IUnitService {
      * @return 单位实体类
      */
     List<Unit> listAllUnit();
-
-
-
 
 
     /**

@@ -69,6 +69,7 @@ public class PlanValueController {
         }
 
         String yearValue = data.substring(0, 4);
+
         AggregatedPage<PlanValue> search = (AggregatedPage)planValueService.planValueSummary(projectName, unitId, subUnitId, constructionNatureId, projectId, yearValue);
 
         Terms sum = (Terms)search.getAggregation("SUM");
@@ -111,7 +112,6 @@ public class PlanValueController {
 
     @PostMapping("/planValue")
     public CommonResult<Object> postPlanValue(@RequestBody PlanValue planValue){
-
 
         if(planValue.getYearValue() == null){
             return CommonResult.fail(400,"项目id:"+planValue.getProjectId()+"未选择时间");

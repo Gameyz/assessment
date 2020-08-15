@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BackEndApplication {
 
     public static void main(String[] args){
+        System.setProperty("tomcat.util.http.parser.HttpParser.requestTargetAllow","[]{}:+.");
         System.setProperty("es.set.netty.runtime.available.processors", "false");
         SpringApplication.run(BackEndApplication.class, args);
     }
